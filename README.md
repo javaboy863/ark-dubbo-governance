@@ -2,6 +2,11 @@
 &emsp;&emsp;ark-dubbo-governance是ark系列框架中的负责dubbo服务治理的服务。
 # 2.ark-dubbo-governance解决了什么问题？
 &emsp;&emsp;ark-dubbo-governance用于dubbo服务治理场景，目前版本主要用于dubbo服务的无损上下线场景（摘挂流量）。在此之前，我们经常会遇到某个服务正在上线，导致其他服务调用后出现异常的情况。
+<div align="left">
+<img src="./img/1.png" width="80%" align="center"/>
+</div>
+&emsp;&emsp;上图中，服务A调用服务B，服务B正在上线，服务A调用服务B时，会出现异常。为了解决这个问题，我们需要在服务B上线前，先摘流量，然后再上线服务B，上线完成后，再挂流量。这样就可以保证服务B上线时，不影响其他服务的调用。
+
 # 3.ark-dubbo-governance的使用场景
  - 当把nacos作为dubbo的注册中心，摘挂dubbo流量的场景。
 # 4.ark-dubbo-governance服务如何启动？
@@ -24,7 +29,14 @@
 "timestamp": 1664246234844
 }
 ```
-# 6.后续规划
+
+# 7.设计原理
+- 采用无感知设计，业务系统的dubbo服务不需要集成摘dubbo流量组件，也无需感知摘流量服务的存在即可完成应对流量的无损上下线。
+<div align="left">
+<img src="./img/2.png" width="80%" align="center"/>
+</div>
+
+# 8.后续规划
   | 类型 | 是否支持摘挂流量 |
   | :----: | :----: | 
   | dubbo | 支持 | 
